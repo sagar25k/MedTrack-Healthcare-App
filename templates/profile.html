@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <h2 class="mb-4 text-center">My Profile</h2>
+
+    <form method="POST" action="{{ url_for('profile') }}" class="card shadow p-4 mx-auto" style="max-width: 600px;">
+        <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ user['username'] }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user['email'] }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="contact" class="form-label">Contact Number</label>
+            <input type="text" class="form-control" id="contact" name="contact" value="{{ user['contact'] }}">
+        </div>
+
+        {% if user['role'] == 'doctor' %}
+            <div class="mb-3">
+                <label for="specialty" class="form-label">Specialty</label>
+                <input type="text" class="form-control" id="specialty" name="specialty" value="{{ user.get('specialty', '') }}">
+            </div>
+            <div class="mb-3">
+                <label for="qualifications" class="form-label">Qualifications</label>
+                <input type="text" class="form-control" id="qualifications" name="qualifications" value="{{ user.get('qualifications', '') }}">
+            </div>
+        {% endif %}
+
+        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+    </form>
+</div>
+{% endblock %}

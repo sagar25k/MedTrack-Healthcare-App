@@ -1,0 +1,185 @@
+/* custom.css - MedTrack */
+
+/* Root Variables */
+:root {
+    --primary-color: #0d6efd;
+    --secondary-color: #6c757d;
+    --light-bg: #f8f9fa;
+    --dark-bg: #121212;
+    --dark-text: #e0e0e0;
+    --light-text: #212529;
+    --accent-color: #0d6efd;
+    --focus-color: #ffcc00;
+}
+
+/* Global Styles */
+body {
+    background-color: var(--light-bg);
+    color: var(--light-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+/* Skip to Content Link for Accessibility */
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 1000;
+    transition: top 0.3s;
+}
+.skip-to-content:focus {
+    top: 0;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+    transition: background-color 0.2s, border-color 0.2s;
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #0b5ed7;
+    border-color: #0a58ca;
+}
+
+.btn-outline-light:hover, .btn-outline-light:focus {
+    background-color: #fff;
+    color: var(--primary-color);
+}
+
+button:focus, a:focus {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+/* Navbar */
+.navbar {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.navbar-brand {
+    font-weight: 600;
+}
+
+/* Cards */
+.card {
+    border-radius: 0.5rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.card-title {
+    font-weight: 600;
+}
+
+/* Forms */
+.form-control, .form-select {
+    border-radius: 0.4rem;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+/* Tables */
+.table th, .table td {
+    vertical-align: middle;
+}
+
+/* Status Badges */
+.badge {
+    font-size: 0.85rem;
+    padding: 0.4em 0.7em;
+}
+
+/* Footer */
+footer {
+    background-color: var(--light-bg);
+    color: var(--secondary-color);
+}
+
+/* Links */
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+a:focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 2px;
+}
+
+/* Dark Mode Support */
+body.dark-mode {
+    background-color: var(--dark-bg);
+    color: var(--dark-text);
+}
+body.dark-mode .navbar {
+    background-color: #1f1f1f;
+}
+body.dark-mode .card,
+body.dark-mode .form-control,
+body.dark-mode .form-select,
+body.dark-mode .table {
+    background-color: #1e1e1e;
+    color: var(--dark-text);
+    border-color: #333;
+}
+body.dark-mode .btn-primary {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+body.dark-mode footer {
+    background-color: #1e1e1e;
+    color: #999;
+}
+body.dark-mode .btn-outline-light {
+    border-color: #e0e0e0;
+    color: #e0e0e0;
+}
+body.dark-mode .btn-outline-light:hover {
+    background-color: #e0e0e0;
+    color: #1f1f1f;
+}
+
+/* Dark Mode Toggle Animation */
+body {
+    transition: background-color 0.4s, color 0.4s;
+}
+.navbar, .card, .form-control, .form-select, footer {
+    transition: background-color 0.4s, color 0.4s, border-color 0.4s;
+}
+
+/* Responsive Headings */
+@media (max-width: 768px) {
+    h1, h2, h3 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Animations */
+.fade-in {
+    animation: fadeIn 0.8s ease-in-out both;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Smooth transition for AOS animations */
+[data-aos] {
+    transition-property: transform, opacity;
+}
+
+/* Improved focus outlines for accessibility */
+*:focus-visible {
+    outline: 3px solid var(--focus-color);
+    outline-offset: 3px;
+}

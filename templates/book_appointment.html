@@ -1,0 +1,56 @@
+<!-- templates/book_appointment.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+
+    <div class="card shadow-sm mx-auto" style="max-width: 800px;">
+        <div class="card-body p-4">
+            <h3 class="fw-bold mb-2">Book an Appointment</h3>
+            <p class="text-muted mb-4">Select a doctor and provide your symptoms to book a consultation.</p>
+
+            <form method="POST" action="{{ url_for('book_appointment') }}">
+                <div class="mb-4">
+                    <h5 class="fw-semibold mb-2">Select Doctor</h5>
+                    <div class="row g-3">
+                        {% for doctor in doctors %}
+                        <div class="col-md-6">
+                            <label class="border rounded p-3 d-block text-center h-100 cursor-pointer">
+                                <input type="radio" class="btn-check" name="doctor_email" value="{{ doctor.email }}" required>
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center mb-2" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                        {{ doctor.name[0]|upper }}
+                                    </div>
+                                    <h6 class="fw-bold mb-0">{{ doctor.name }}</h6>
+                                    <small class="text-muted">{{ doctor.specialization }}</small>
+                                </div>
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="appointment_date" class="form-label">Appointment Date</label>
+                        <input type="date" class="form-control" id="appointment_date" name="appointment_date" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="appointment_time" class="form-label">Appointment Time</label>
+                        <input type="time" class="form-control" id="appointment_time" name="appointment_time" required>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="symptoms" class="form-label">Symptoms/Reason for Visit</label>
+                    <textarea class="form-control" id="symptoms" name="symptoms" rows="3" placeholder="Please describe your symptoms or reason for consultation..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Book Appointment</button>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

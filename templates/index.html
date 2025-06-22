@@ -1,0 +1,75 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <!-- Welcome Jumbotron with AOS -->
+    <div class="jumbotron text-center py-5 mb-5" data-aos="zoom-in" data-aos-duration="1200">
+        <h1 class="display-4">Welcome to MedTrack</h1>
+        <p class="lead">Your personalized healthcare management system.</p>
+    </div>
+
+    <!-- Hero Section with Animation -->
+    <div class="p-5 mb-5 bg-primary text-white rounded-3 shadow" data-aos="fade-up" data-aos-delay="200" data-aos-duration="1000">
+        <div class="container-fluid py-5 text-center">
+            <h1 class="display-5 fw-bold">Welcome to HealthCare App</h1>
+            <p class="fs-5">Connect with doctors, book appointments, and manage your health from anywhere, anytime.<br> Our secure platform makes healthcare accessible and convenient.</p>
+            <div class="mt-3">
+                <a href="{{ url_for('login') }}" class="btn btn-light btn-lg me-2" data-aos="fade-right" data-aos-delay="300">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-outline-light btn-lg" data-aos="fade-left" data-aos-delay="300">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section with Animations -->
+    <div class="row text-center g-4 mb-5">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="bi bi-person-badge fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Find Doctors</h5>
+                    <p class="card-text">Connect with qualified healthcare professionals specialized in various medical fields.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="bi bi-calendar-check fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Easy Appointments</h5>
+                    <p class="card-text">Book and manage appointments with just a few clicks, no phone calls needed.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <div class="mb-3">
+                        <i class="bi bi-file-earmark-medical fs-1 text-primary"></i>
+                    </div>
+                    <h5 class="card-title fw-bold">Digital Records</h5>
+                    <p class="card-text">Access your medical history, diagnoses, and prescriptions anytime.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works Section -->
+    <div class="bg-light p-4 rounded shadow-sm" data-aos="fade-up" data-aos-delay="500">
+        <h3 class="fw-bold">How It Works</h3>
+        <ol class="mt-3">
+            <li>Register as a patient or doctor</li>
+            <li>Log in to your personalized dashboard</li>
+            <li>Patients can search for doctors and book appointments</li>
+            <li>Doctors can manage appointments and provide diagnoses</li>
+            <li>Receive email notifications for appointment updates</li>
+        </ol>
+    </div>
+
+</div>
+{% endblock %}

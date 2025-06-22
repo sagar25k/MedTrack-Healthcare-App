@@ -1,0 +1,45 @@
+<!-- templates/view_appointment_patient.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Appointment Details</h3>
+
+            <div class="mb-4 p-3 bg-light rounded">
+                <h5 class="fw-bold mb-2">Appointment Information</h5>
+                <p class="mb-1"><strong>Doctor:</strong> {{ appointment.doctor_name }}</p>
+                <p class="mb-1"><strong>Specialization:</strong> {{ appointment.specialization }}</p>
+                <p class="mb-1"><strong>Status:</strong> 
+                    {% if appointment.status == 'pending' %}
+                        <span class="badge bg-warning text-dark">{{ appointment.status|capitalize }}</span>
+                    {% elif appointment.status == 'completed' %}
+                        <span class="badge bg-success">{{ appointment.status|capitalize }}</span>
+                    {% endif %}
+                </p>
+                <p class="mb-1"><strong>Date:</strong> {{ appointment.appointment_date[:10] }}</p>
+                <p class="mb-0"><strong>Created:</strong> {{ appointment.created_at }}</p>
+            </div>
+
+            <div class="mb-4 p-3 bg-light rounded">
+                <h5 class="fw-bold mb-2">Your Symptoms</h5>
+                <p class="mb-0">{{ appointment.symptoms }}</p>
+            </div>
+
+            {% if appointment.status == 'completed' %}
+            <div class="mb-4 p-3 bg-light rounded">
+                <h5 class="fw-bold mb-2">Doctor's Diagnosis</h5>
+                <p><strong>Diagnosis:</strong> {{ appointment.diagnosis or 'N/A' }}</p>
+                <p><strong>Treatment Plan:</strong> {{ appointment.treatment_plan or 'N/A' }}</p>
+                <p><strong>Prescription:</strong> {{ appointment.prescription or 'N/A' }}</p>
+            </div>
+            {% endif %}
+
+            <div class="text-center">
+                <a href="{{ url_for('dashboard_patient') }}" class="btn btn-primary">Back to Dashboard</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

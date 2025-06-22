@@ -1,0 +1,170 @@
+<!-- templates/dashboard_doctor.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-4">
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="p-4 mb-4 text-white rounded" style="background: linear-gradient(90deg, #0d6efd, #198754);">
+        <h4 class="fw-bold mb-0">Welcome, Dr. {{ session['name'] }}</h4>
+        <small>Manage your appointments and patient consultations from your dashboard.</small>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h5 class="fw-semibold mb-0">Doctor Dashboard</h5>
+        <form method="GET" action="{{ url_for('dashboard_doctor') }}" class="d-flex" role="search">
+            <input class="form-control me-2" type="search" name="search" placeholder="Search patient name..." value="{{ request.args.get('search', '') }}">
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+    </div>
+
+    <div class="row g-3 mb-4">
+        <div class="col-md-4">
+            <div class="card text-center p-3 shadow-sm">
+                <h3 class="text-primary mb-0">{{ pending_count }}</h3>
+                <div class="text-muted">Pending Appointments</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-3 shadow-sm">
+                <h3 class="text-primary mb-0">{{ completed_count }}</h3>
+                <div class="text-muted">Completed Appointments</div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card text-center p-3 shadow-sm">
+                <h3 class="text-primary mb-0">{{ total_count }}</h3>
+                <div class="text-muted">Total Appointments</div>
+            </div>
+        </div>
+    </div>
+
+    <ul class="nav nav-tabs mb-3" id="appointmentsTab" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="pending-tab" data-bs-toggle="tab" data-bs-target="#pending" type="button" role="tab" aria-controls="pending" aria-selected="true">Pending Appointments</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="completed-tab" data-bs-toggle="tab" data-bs-target="#completed" type="button" role="tab" aria-controls="completed" aria-selected="false">Completed Appointments</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="all-tab" data-bs-toggle="tab" data-bs-target="#all" type="button" role="tab" aria-controls="all" aria-selected="false">All Appointments</button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="appointmentsTabContent">
+        <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+            <div class="table-responsive">
+                <table class="table align-middle table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Date</th>
+                            <th>Symptoms</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in pending_appointments %}
+                        <tr>
+                            <td>{{ appointment.patient_name }}</td>
+                            <td>{{ appointment.appointment_date[:10] }}</td>
+                            <td>{{ appointment.symptoms }}</td>
+                            <td>
+                                <span class="badge bg-warning text-dark">{{ appointment.status|capitalize }}</span>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('view_appointment_doctor', appointment_id=appointment.appointment_id) }}" class="btn btn-primary btn-sm">View Details</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="text-center text-muted">No pending appointments found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="completed" role="tabpanel" aria-labelledby="completed-tab">
+            <div class="table-responsive">
+                <table class="table align-middle table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Date</th>
+                            <th>Symptoms</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in completed_appointments %}
+                        <tr>
+                            <td>{{ appointment.patient_name }}</td>
+                            <td>{{ appointment.appointment_date[:10] }}</td>
+                            <td>{{ appointment.symptoms }}</td>
+                            <td>
+                                <span class="badge bg-success">{{ appointment.status|capitalize }}</span>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('view_appointment_doctor', appointment_id=appointment.appointment_id) }}" class="btn btn-primary btn-sm">View Details</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="text-center text-muted">No completed appointments found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="all" role="tabpanel" aria-labelledby="all-tab">
+            <div class="table-responsive">
+                <table class="table align-middle table-striped">
+                    <thead>
+                        <tr>
+                            <th>Patient Name</th>
+                            <th>Date</th>
+                            <th>Symptoms</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in all_appointments %}
+                        <tr>
+                            <td>{{ appointment.patient_name }}</td>
+                            <td>{{ appointment.appointment_date[:10] }}</td>
+                            <td>{{ appointment.symptoms }}</td>
+                            <td>
+                                {% if appointment.status == 'completed' %}
+                                <span class="badge bg-success">{{ appointment.status|capitalize }}</span>
+                                {% elif appointment.status == 'pending' %}
+                                <span class="badge bg-warning text-dark">{{ appointment.status|capitalize }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{{ url_for('view_appointment_doctor', appointment_id=appointment.appointment_id) }}" class="btn btn-primary btn-sm">View Details</a>
+                            </td>
+                        </tr>
+                        {% else %}
+                        <tr><td colspan="5" class="text-center text-muted">No appointments found.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

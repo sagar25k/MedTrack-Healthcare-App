@@ -1,0 +1,53 @@
+<!-- templates/view_appointment_doctor.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h3 class="card-title text-center mb-4">Appointment Details</h3>
+
+            <div class="mb-4 p-3 bg-light rounded">
+                <h5 class="fw-bold mb-2">Patient Information</h5>
+                <p class="mb-1"><strong>Name:</strong> {{ appointment.patient_name }}</p>
+                <p class="mb-1"><strong>Status:</strong> 
+                    {% if appointment.status == 'pending' %}
+                        <span class="badge bg-warning text-dark">{{ appointment.status|capitalize }}</span>
+                    {% elif appointment.status == 'completed' %}
+                        <span class="badge bg-success">{{ appointment.status|capitalize }}</span>
+                    {% endif %}
+                </p>
+                <p class="mb-1"><strong>Date:</strong> {{ appointment.appointment_date[:10] }}</p>
+                <p class="mb-0"><strong>Created:</strong> {{ appointment.created_at }}</p>
+            </div>
+
+            <div class="mb-4 p-3 bg-light rounded">
+                <h5 class="fw-bold mb-2">Patient Symptoms</h5>
+                <p class="mb-0">{{ appointment.symptoms }}</p>
+            </div>
+
+            <form method="POST" action="{{ url_for('view_appointment_doctor', appointment_id=appointment.appointment_id) }}">
+                <div class="mb-3">
+                    <label for="diagnosis" class="form-label fw-semibold">Diagnosis</label>
+                    <textarea class="form-control" id="diagnosis" name="diagnosis" rows="2" placeholder="Enter your diagnosis">{{ appointment.diagnosis or '' }}</textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="treatment_plan" class="form-label fw-semibold">Treatment Plan</label>
+                    <textarea class="form-control" id="treatment_plan" name="treatment_plan" rows="2" placeholder="Describe the treatment plan">{{ appointment.treatment_plan or '' }}</textarea>
+                </div>
+
+                <div class="mb-4">
+                    <label for="prescription" class="form-label fw-semibold">Prescription</label>
+                    <textarea class="form-control" id="prescription" name="prescription" rows="2" placeholder="Write prescription details">{{ appointment.prescription or '' }}</textarea>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Submit Diagnosis</button>
+                    <a href="{{ url_for('dashboard_doctor') }}" class="btn btn-primary">Back to Dashboard</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
