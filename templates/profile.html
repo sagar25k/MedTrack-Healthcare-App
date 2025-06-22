@@ -1,37 +1,41 @@
+<!-- templates/profile.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container my-5">
-    <h2 class="mb-4 text-center">My Profile</h2>
+<div class="container my-5" data-aos="fade-up">
+    <h2 class="mb-4 text-center fw-bold">My Profile</h2>
 
-    <form method="POST" action="{{ url_for('profile') }}" class="card shadow p-4 mx-auto" style="max-width: 600px;">
+    <form method="POST" action="{{ url_for('profile') }}" class="card shadow p-4 mx-auto bg-light" style="max-width: 600px;" novalidate>
         <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" value="{{ user['username'] }}" required>
+            <label for="username" class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ user['username'] }}" required aria-required="true">
         </div>
 
         <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ user['email'] }}" required>
+            <label for="email" class="form-label fw-semibold">Email <span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ user['email'] }}" required aria-required="true">
         </div>
 
         <div class="mb-3">
-            <label for="contact" class="form-label">Contact Number</label>
-            <input type="text" class="form-control" id="contact" name="contact" value="{{ user['contact'] }}">
+            <label for="contact" class="form-label fw-semibold">Contact Number</label>
+            <input type="tel" class="form-control" id="contact" name="contact" value="{{ user['contact'] }}" pattern="[0-9]{10}" aria-describedby="contactHelp">
+            <div id="contactHelp" class="form-text">Enter a 10-digit number (optional).</div>
         </div>
 
         {% if user['role'] == 'doctor' %}
             <div class="mb-3">
-                <label for="specialty" class="form-label">Specialty</label>
+                <label for="specialty" class="form-label fw-semibold">Specialty</label>
                 <input type="text" class="form-control" id="specialty" name="specialty" value="{{ user.get('specialty', '') }}">
             </div>
             <div class="mb-3">
-                <label for="qualifications" class="form-label">Qualifications</label>
+                <label for="qualifications" class="form-label fw-semibold">Qualifications</label>
                 <input type="text" class="form-control" id="qualifications" name="qualifications" value="{{ user.get('qualifications', '') }}">
             </div>
         {% endif %}
 
-        <button type="submit" class="btn btn-primary w-100">Update Profile</button>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary btn-lg">Update Profile</button>
+        </div>
     </form>
 </div>
 {% endblock %}

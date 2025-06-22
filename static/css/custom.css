@@ -35,6 +35,17 @@ body {
     top: 0;
 }
 
+/* ✅ Visually Hidden Focusable (For Skip Links) */
+.visually-hidden-focusable:active,
+.visually-hidden-focusable:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0.5rem;
+    clip: auto;
+    white-space: normal;
+}
+
 /* Buttons */
 .btn-primary {
     background-color: var(--primary-color);
