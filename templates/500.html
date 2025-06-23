@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container text-center my-5" role="alert" aria-live="polite">
+    <h1 class="display-1 fw-bold text-danger">500</h1>
+    <h2 class="mb-3">Internal Server Error</h2>
+    <p class="lead mb-4 text-muted">Oops! Something went wrong on our end. Please try again later.</p>
+
+    <!-- Emoji/Icon -->
+    <div class="mb-4" aria-hidden="true" style="font-size: 4rem;">⚠️</div>
+
+    <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">Go to Home</a>
+</div>
+{% endblock %}
