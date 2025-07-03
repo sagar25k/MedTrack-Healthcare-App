@@ -2,14 +2,17 @@
 
 /* Root Variables */
 :root {
-    --primary-color: #0d6efd;
+    --primary-color: #2ecc71; /* Lemon green */
     --secondary-color: #6c757d;
-    --light-bg: #f8f9fa;
+    --light-bg: #ffffff; /* White background */
     --dark-bg: #121212;
     --dark-text: #e0e0e0;
     --light-text: #212529;
-    --accent-color: #0d6efd;
-    --focus-color: #ffcc00;
+    --accent-color: #2ecc71; /* Lemon green for accents */
+    --focus-color: #27ae60; /* Darker lemon green for focus */
+    --lemon-green: #2ecc71; /* Explicit lemon green for use */
+    --lemon-dark: #219653; /* Darker lemon green for active states */
+    --word-bg-color: rgba(46, 204, 113, 0.2); /* Light lemon green for word background */
 }
 
 /* Global Styles */
@@ -35,7 +38,7 @@ body {
     top: 0;
 }
 
-/* ✅ Visually Hidden Focusable (For Skip Links) */
+/* Visually Hidden Focusable (For Skip Links) */
 .visually-hidden-focusable:active,
 .visually-hidden-focusable:focus {
     position: static;
@@ -53,8 +56,8 @@ body {
     transition: background-color 0.2s, border-color 0.2s;
 }
 .btn-primary:hover, .btn-primary:focus {
-    background-color: #0b5ed7;
-    border-color: #0a58ca;
+    background-color: var(--focus-color);
+    border-color: var(--lemon-dark);
 }
 
 .btn-outline-light:hover, .btn-outline-light:focus {
@@ -62,9 +65,13 @@ body {
     color: var(--primary-color);
 }
 
-button:focus, a:focus {
-    outline: 3px solid var(--focus-color);
-    outline-offset: 2px;
+.btn-outline-lemon-green {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+.btn-outline-lemon-green:hover, .btn-outline-lemon-green:focus {
+    background-color: var(--primary-color);
+    color: #fff;
 }
 
 /* Navbar */
@@ -73,6 +80,30 @@ button:focus, a:focus {
 }
 .navbar-brand {
     font-weight: 600;
+}
+.nav-item {
+    margin: 0 5px;
+}
+.nav-link {
+    color: #fff !important;
+    background-color: var(--primary-color); /* Lemon green box */
+    padding: 6px 12px;
+    border-radius: 4px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.nav-link:hover, .nav-link:focus {
+    background-color: var(--focus-color); /* Darker green on hover/focus */
+    transform: scale(1.05);
+}
+.nav-link.active {
+    background-color: var(--lemon-dark); /* Darkest green for active state */
+    font-weight: 600;
+}
+.navbar-toggler {
+    border-color: var(--primary-color);
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%232ecc71' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
 /* Cards */
@@ -88,13 +119,61 @@ button:focus, a:focus {
     font-weight: 600;
 }
 
+/* Horizontal Sliding Cards for How It Works */
+.slide-card {
+    transition: transform 0.3s ease-in-out;
+}
+.slide-card:hover, .slide-card:focus {
+    transform: scale(0.95); /* Zoom-out effect */
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+/* Slider Container */
+.slider-container {
+    overflow: hidden;
+    width: 100%;
+}
+.slider-track {
+    display: flex;
+    animation: slideLoop 20s linear infinite;
+}
+.slider-container:hover .slider-track, .slider-container:focus-within .slider-track {
+    animation-play-state: paused; /* Pause animation on hover or focus */
+}
+
+/* Continuous Sliding Animation */
+@keyframes slideLoop {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%); /* Move to the left by half the track width */
+    }
+}
+
+/* Word-by-Word Sliding Animation with Background */
+.word-slide-bg {
+    display: inline-block;
+    padding: 2px 6px;
+    margin: 2px;
+    /* background-color: var(--word-bg-color); */
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+/* Jumbotron Card */
+.jumbotron .card {
+    border: none;
+    background-color: rgba(255, 255, 255, 0.95); /* Semi-transparent white for contrast */
+}
+
 /* Forms */
 .form-control, .form-select {
     border-radius: 0.4rem;
 }
 .form-control:focus, .form-select:focus {
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(46, 204, 113, 0.25);
 }
 
 /* Tables */
@@ -120,7 +199,7 @@ a {
     text-decoration: none;
 }
 a:hover {
-    text-decoration: underline;
+    text-decoration: none; /* Remove underline for nav-links */
 }
 a:focus-visible {
     outline: 3px solid var(--focus-color);
@@ -133,7 +212,7 @@ body.dark-mode {
     color: var(--dark-text);
 }
 body.dark-mode .navbar {
-    background-color: #1f1f1f;
+    background-color: #1e1e1e; /* Dark background for navbar */
 }
 body.dark-mode .card,
 body.dark-mode .form-control,
@@ -159,6 +238,39 @@ body.dark-mode .btn-outline-light:hover {
     background-color: #e0e0e0;
     color: #1f1f1f;
 }
+body.dark-mode .btn-outline-lemon-green {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+}
+body.dark-mode .btn-outline-lemon-green:hover, body.dark-mode .btn-outline-lemon-green:focus {
+    background-color: var(--accent-color);
+    color: #fff;
+}
+body.dark-mode .word-slide-bg {
+    background-color: rgba(46, 204, 113, 0.3); 
+}
+body.dark-mode .word-slide-bg:hover {   
+    background-color: rgba(46, 204, 113, 0.5);
+}
+body.dark-mode .jumbotron .card {
+    background-color: rgba(30, 30, 30, 0.95); /* Semi-transparent dark for contrast in dark mode */
+}
+body.dark-mode .nav-link {
+    color: #fff !important;
+    background-color: var(--primary-color);
+}
+body.dark-mode .nav-link:hover, body.dark-mode .nav-link:focus {
+    background-color: var(--focus-color);
+}
+body.dark-mode .nav-link.active {
+    background-color: var(--lemon-dark);
+}
+body.dark-mode .navbar-toggler {
+    border-color: var(--accent-color);
+}
+body.dark-mode .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%232ecc71' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
 
 /* Dark Mode Toggle Animation */
 body {
@@ -168,10 +280,40 @@ body {
     transition: background-color 0.4s, color 0.4s, border-color 0.4s;
 }
 
-/* Responsive Headings */
+/* Hero Section Background */
+.bg-lemon-green {
+    background-color: var(--lemon-green);
+}
+
+/* Text Color for Features Section */
+.text-lemon-green {
+    color: var(--lemon-green);
+}
+.text-lemon-dark {
+    color: var(--lemon-dark);
+}
+
+/* Responsive Headings and Slider */
 @media (max-width: 768px) {
     h1, h2, h3 {
         font-size: 1.25rem;
+    }
+    .slide-card {
+        width: 250px; /* Smaller cards on mobile */
+    }
+    .word-slide-bg {
+        padding: 1px 4px; /* Smaller padding on mobile */
+        margin: 1px;
+    }
+    .jumbotron .card {
+        max-width: 90%; /* Responsive card width on mobile */
+    }
+    .nav-item {
+        margin: 2px 0; /* Stack nav links vertically on mobile */
+    }
+    .nav-link {
+        display: inline-block;
+        width: auto; /* Fit content on mobile */
     }
 }
 
@@ -192,5 +334,5 @@ body {
 /* Improved focus outlines for accessibility */
 *:focus-visible {
     outline: 3px solid var(--focus-color);
-    outline-offset: 3px;
+    outline-offset: 2px;
 }

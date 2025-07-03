@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Apply stored mode on load
     if (localStorage.getItem("darkMode") === "enabled") {
         document.body.classList.add("dark-mode");
+        if (toggleDarkMode) toggleDarkMode.textContent = "Light Mode";
     }
 
     // Toggle dark mode and save preference
@@ -14,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleDarkMode.addEventListener("click", () => {
             document.body.classList.toggle("dark-mode");
             localStorage.setItem("darkMode", document.body.classList.contains("dark-mode") ? "enabled" : "disabled");
+            toggleDarkMode.textContent = document.body.classList.contains("dark-mode") ? "Light Mode" : "Dark Mode";
         });
     }
 
@@ -60,4 +62,30 @@ document.addEventListener("DOMContentLoaded", function () {
     document.body.addEventListener('mousedown', function () {
         document.body.classList.remove('user-is-tabbing');
     });
+
+    // ==== Slider Interaction for How It Works ====
+    const sliderTrack = document.querySelector('.slider-track');
+    const slideCards = document.querySelectorAll('.slide-card');
+
+    if (sliderTrack && slideCards.length > 0) {
+        slideCards.forEach(card => {
+            // Pause animation on focus or click
+            card.addEventListener('focus', () => {
+                sliderTrack.style.animationPlayState = 'paused';
+            });
+            card.addEventListener('click', () => {
+                sliderTrack.style.animationPlayState = 'paused';
+            });
+            // Resume animation when focus or click leaves
+            card.addEventListener('blur', () => {
+                sliderTrack.style.animationPlayState = 'running';
+            });
+        });
+
+        // Resume animation when mouse leaves the slider container
+        const sliderContainer = document.querySelector('.slider-container');
+        sliderContainer.addEventListener('mouseleave', () => {
+            sliderTrack.style.animationPlayState = 'running';
+        });
+    }
 });
