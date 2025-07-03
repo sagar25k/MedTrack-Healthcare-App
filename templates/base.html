@@ -41,7 +41,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    {% if 'username' in session %}
+                    {% if 'email' in session %}
                         <li class="nav-item">
                             <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a>
                         </li>
@@ -103,6 +103,5 @@
             once: true
         });
     </script>
-
 </body>
 </html>
