@@ -62,7 +62,7 @@ Jinja2	HTML Templating Engine
 dotenv	Environment Configuration
 Werkzeug	Password Hashing
 SMTP (Gmail)	Sending email notifications
-
+---
 MedTrack/
 ├── app.py
 ├── requirements.txt
@@ -87,7 +87,7 @@ MedTrack/
 │       └── scripts.js
 └── README.md
 
-
+-----
 SECRET_KEY=<your_secret_key_here>
 EMAIL_USER=<your_email_address>
 EMAIL_PASS=<your_email_password_or_app_password>
