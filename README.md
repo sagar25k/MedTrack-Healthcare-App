@@ -1,73 +1,78 @@
-📋 MedTrack - Healthcare Management System
-MedTrack is a Cloud-Enabled Healthcare Management System built using Flask, AWS DynamoDB, and SNS. It allows patients to book appointments with doctors, manage profiles, view appointment history, and enables doctors to manage their schedules effectively.
+# 🏥 MedTrack — Cloud-Enabled Healthcare Management System
 
-
-📌 Features
-✅ User Registration (Doctors & Patients)
-
-✅ Secure Login System (Role-based: Patient / Doctor)
-
-✅ Book Appointments with Doctors
-
-✅ Doctors Manage Appointments
-
-✅ Search Appointments (by name or date)
-
-✅ Email Notifications (to users/admin using SMTP)
-
-✅ AWS DynamoDB Integration (User & Appointment data)
-
-✅ Responsive UI using Bootstrap
-
-✅ Error Handling with Custom 404 Page
-
-## 🌐 Live Demo (Optional)
-*(If hosted, add your URL here)*
+**MedTrack** is a robust healthcare management platform built with **Flask (Python)** and integrated with **AWS DynamoDB** and **AWS SNS**. It enables **patients** to book and manage appointments with **doctors**, while doctors can efficiently handle their schedules. With role-based login, email notifications, and a responsive Bootstrap UI, MedTrack provides a seamless experience for both patients and healthcare providers.
 
 ---
 
-## 🚀 Features
+## 📌 Key Features
 
-- User roles: **Patient**, **Doctor**, **Admin**
-- User registration & authentication
-- **Book appointments** with doctors
-- **Doctor dashboards** to manage patient appointments
-- Email notifications for bookings and confirmations
-- AWS DynamoDB for database
-- AWS SNS for notifications (optional)
-- Dark mode, accessibility, responsive UI
-- **Deployed on AWS EC2**
+- ✅ **User Registration & Role Selection**  
+  Users can register as either **Doctor** or **Patient**, and access functionalities based on their role.
+
+- ✅ **Secure Login System**  
+  Role-based login with password hashing using **Werkzeug** for secure access.
+
+- ✅ **Appointment Booking**  
+  Patients can browse doctors and book appointments by selecting date and time.
+
+- ✅ **Doctor Appointment Management**  
+  Doctors can view, accept, or complete appointments from their dashboard.
+
+- ✅ **Appointment Search**  
+  Users can search appointments by name or date using intuitive filters.
+
+- ✅ **Email Notifications**  
+  Users receive emails for appointment confirmations, cancellations, and updates via **SMTP (Gmail)**.
+
+- ✅ **AWS DynamoDB Integration**  
+  User and appointment data are stored securely in AWS NoSQL database.
+
+- ✅ **Optional AWS SNS Integration**  
+  Supports cloud-based notifications for scalable messaging.
+
+- ✅ **Responsive & Accessible UI**  
+  Built with **Bootstrap 5**, supporting dark mode and mobile-first design.
+
+- ✅ **Custom Error Handling**  
+  Includes custom 404 error page for better user experience.
 
 ---
 
-## 📦 Tech Stack
+## 🌐 Live Demo *(Optional)*
 
-- **Backend:** Flask (Python)
-- **Frontend:** HTML5, Bootstrap 5, Jinja2
-- **Database:** AWS DynamoDB
-- **Notifications:** AWS SNS (optional)
-- **Deployment:** AWS EC2
+> Add your hosted demo link here  
+> Example: `https://medtrack.yourdomain.com`
+
+---
+
+## 🚀 Full Feature Summary
+
+| Feature                      | Description                                        |
+|-----------------------------|----------------------------------------------------|
+| 👥 Roles                    | Patient, Doctor, *(Admin - future scope)*         |
+| 🔐 Auth                     | Secure login with hashed passwords                 |
+| 📅 Booking                  | Patients book and view appointments                |
+| 🩺 Doctor Tools             | Manage appointments and status updates             |
+| 🔍 Search                   | By doctor name, patient name, or date              |
+| 📧 Notifications            | SMTP-based email notifications                     |
+| ☁️ Cloud Integration        | AWS DynamoDB and optional SNS                      |
+| 🎨 UI                       | Bootstrap 5 with dark mode & accessibility         |
+| 🧪 Testing                  | Fully functional test coverage for major flows     |
+| 💻 Deployment               | Suitable for AWS EC2, Heroku, or any VPS host      |
 
 ---
 
 ## 📁 Project Structure
 
-🛠️ Technologies Used
-Technology	Purpose
-Python (Flask)	Backend Web Application
-AWS DynamoDB	NoSQL Database for persistence
-AWS SNS	Email/Notification System
-Bootstrap 5	Responsive Frontend Framework
-Jinja2	HTML Templating Engine
-dotenv	Environment Configuration
-Werkzeug	Password Hashing
-SMTP (Gmail)	Sending email notifications
----
+## 📁 Project Structure — MedTrack
+
+```bash
 MedTrack/
-├── app.py
-├── requirements.txt
-├── .env
-├── templates/
+├── app.py                       # Main Flask app logic
+├── requirements.txt             # Python packages
+├── .env                         # Environment variables
+
+├── templates/                   # Jinja2 HTML templates
 │   ├── base.html
 │   ├── index.html
 │   ├── register.html
@@ -80,79 +85,105 @@ MedTrack/
 │   ├── search_results.html
 │   ├── profile.html
 │   └── 404.html
+
 ├── static/
 │   ├── css/
 │   │   └── styles.css
 │   └── js/
 │       └── scripts.js
+
 └── README.md
 
------
-SECRET_KEY=<your_secret_key_here>
-EMAIL_USER=<your_email_address>
-EMAIL_PASS=<your_email_password_or_app_password>
-AWS_ACCESS_KEY_ID=<your_aws_access_key>
-AWS_SECRET_ACCESS_KEY=<your_aws_secret_key>
-AWS_REGION=<your_aws_region>
-DYNAMODB_USERS_TABLE=Users
-DYNAMODB_APPOINTMENTS_TABLE=Appointments
-SNS_TOPIC_ARN=<your_topic_arn>  # optional
 
+## 🗃️ DynamoDB Schema
 
-🗃️ DynamoDB Tables Structure
-MedTrack_Users
-Attribute	Type
-email	HASH
-name	String
-role	String (patient or doctor)
-...	...
+### 📌 Users Table (`Users`)
 
-MedTrack_Appointments
-Attribute	Type
-appointment_id	HASH
-patient	String
-doctor	String
-date	String (YYYY-MM-DD)
-time	String (HH:MM)
-status	String (pending, confirmed, completed)
+| Attribute | Type | Description                 |
+|-----------|------|-----------------------------|
+| `email`   | HASH | Unique user identifier      |
+| `name`    | String | Full name                  |
+| `role`    | String | `doctor` or `patient`      |
+| `...`     | ...  | Additional user information |
 
-📧 Email Notification
-Users receive emails for:
+---
 
-Appointment confirmations
+### 📌 Appointments Table (`Appointments`)
 
-Cancellations
+| Attribute         | Type   | Description                          |
+|------------------|--------|--------------------------------------|
+| `appointment_id` | HASH   | Unique appointment ID                |
+| `patient`        | String | Patient’s name                       |
+| `doctor`         | String | Doctor’s name                        |
+| `date`           | String | Format: `YYYY-MM-DD`                 |
+| `time`           | String | Format: `HH:MM`                      |
+| `status`         | String | `pending`, `confirmed`, `completed` |
 
-Admin notifications
+---
 
-Configured using smtplib and Gmail SMTP.
+## ✉️ Email Notifications
 
-✅ Functional Testing Covered
-Home Page Navigation ✔️
+Emails are automatically sent for:
 
-Doctor/Patient Registration ✔️
+- ✅ **Appointment Confirmations**
+- ❌ **Appointment Cancellations/Updates**
+- 🔔 *(Optional)* **Admin Notifications**
 
-Secure Login ✔️
+**Powered by** `smtplib` with Gmail SMTP  
+➡️ Use **App Passwords** for secure Gmail access.
 
-Patient Dashboard ✔️
+---
 
-Doctor Dashboard ✔️
+## ✅ Functional Testing Coverage
 
-Book Appointment ✔️
+| Test Module                   | Status |
+|------------------------------|--------|
+| Home Page Navigation         | ✔️     |
+| Doctor/Patient Registration  | ✔️     |
+| Login & Role-based Redirect  | ✔️     |
+| Patient Dashboard            | ✔️     |
+| Doctor Dashboard             | ✔️     |
+| Book Appointment             | ✔️     |
+| Search Appointments          | ✔️     |
+| DynamoDB Data Handling       | ✔️     |
+| Email Notification System    | ✔️     |
+| Custom Error Pages           | ✔️     |
 
-Appointment Search ✔️
+## ⚙️ Installation & Running
 
-DynamoDB Updates ✔️
+### 🔁 Clone the Repository
 
-Email Notifications ✔️
+```bash
+git clone https://github.com/yourusername/MedTrack.git
+cd MedTrack
 
-Error Pages ✔️
+## 📦 Install Dependencies
 
-📦 Deployment (Optional)
-For production deployment, use gunicorn or uWSGI behind Nginx/Apache or deploy on platforms like AWS EC2, Heroku, etc.
+Create and activate a virtual environment, then install the required packages:
 
-👨‍💻 Author
-Developed by: @SAGAR
+```bash
+python -m venv venv
+source venv/bin/activate      # On macOS/Linux
+# OR
+venv\Scripts\activate         # On Windows
 
-📧 Contact: Sagar@example.com
+pip install -r requirements.txt
+
+## ⚙️ Configure Environment & Run App
+
+Set up your `.env` file with the necessary environment variables, then run the Flask app using:
+
+```bash
+flask run
+
+## ☁️ Deployment Note 
+  - 🌍 Host on platforms like:
+  - [AWS EC2](https://aws.amazon.com/ec2/)
+
+---
+
+## 👨‍💻 Author
+
+**Developed by:** [@SAGAR](https://github.com/yourusername)  
+📧 **Contact:** `Sagar@example.com`
 
