@@ -1,72 +1,55 @@
-# 🏥 MedTrack — Cloud-Enabled Healthcare Management System
+🏥 MedTrack — Cloud-Enabled Healthcare Management System
+MedTrack is a robust healthcare management platform built with Flask (Python) and integrated with AWS DynamoDB and AWS SNS. It enables patients to book and manage appointments with doctors, while doctors can efficiently handle their schedules. With role-based login, email notifications, and a responsive Bootstrap UI, MedTrack provides a seamless experience for both patients and healthcare providers.
 
-**MedTrack** is a robust healthcare management platform built with **Flask (Python)** and integrated with **AWS DynamoDB** and **AWS SNS**. It enables **patients** to book and manage appointments with **doctors**, while doctors can efficiently handle their schedules. With role-based login, email notifications, and a responsive Bootstrap UI, MedTrack provides a seamless experience for both patients and healthcare providers.
+📌 Key Features
+✅ User Registration & Role Selection
+Users can register as either Doctor or Patient, and access functionalities based on their role.
 
----
+✅ Secure Login System
+Role-based login with password hashing using Werkzeug for secure access.
 
-## 📌 Key Features
+✅ Appointment Booking
+Patients can browse doctors and book appointments by selecting date and time.
 
-- ✅ **User Registration & Role Selection**  
-  Users can register as either **Doctor** or **Patient**, and access functionalities based on their role.
+✅ Doctor Appointment Management
+Doctors can view, accept, or complete appointments from their dashboard.
 
-- ✅ **Secure Login System**  
-  Role-based login with password hashing using **Werkzeug** for secure access.
+✅ Appointment Search
+Users can search appointments by name or date using intuitive filters.
 
-- ✅ **Appointment Booking**  
-  Patients can browse doctors and book appointments by selecting date and time.
+✅ Email Notifications
+Users receive emails for appointment confirmations, cancellations, and updates via SMTP (Gmail).
 
-- ✅ **Doctor Appointment Management**  
-  Doctors can view, accept, or complete appointments from their dashboard.
+✅ AWS DynamoDB Integration
+User and appointment data are stored securely in AWS NoSQL database.
 
-- ✅ **Appointment Search**  
-  Users can search appointments by name or date using intuitive filters.
+✅ Optional AWS SNS Integration
+Supports cloud-based notifications for scalable messaging.
 
-- ✅ **Email Notifications**  
-  Users receive emails for appointment confirmations, cancellations, and updates via **SMTP (Gmail)**.
+✅ Responsive & Accessible UI
+Built with Bootstrap 5, supporting dark mode and mobile-first design.
 
-- ✅ **AWS DynamoDB Integration**  
-  User and appointment data are stored securely in AWS NoSQL database.
+✅ Custom Error Handling
+Includes custom 404 error page for better user experience.
 
-- ✅ **Optional AWS SNS Integration**  
-  Supports cloud-based notifications for scalable messaging.
+🌐 Live Demo (Optional)
+Add your hosted demo link here
+Example: https://medtrack.yourdomain.com
 
-- ✅ **Responsive & Accessible UI**  
-  Built with **Bootstrap 5**, supporting dark mode and mobile-first design.
-
-- ✅ **Custom Error Handling**  
-  Includes custom 404 error page for better user experience.
-
----
-
-## 🌐 Live Demo *(Optional)*
-
-> Add your hosted demo link here  
-> Example: `https://medtrack.yourdomain.com`
-
----
-
-## 🚀 Full Feature Summary
-
-| Feature                      | Description                                        |
-|-----------------------------|----------------------------------------------------|
-| 👥 Roles                    | Patient, Doctor, *(Admin - future scope)*         |
-| 🔐 Auth                     | Secure login with hashed passwords                 |
-| 📅 Booking                  | Patients book and view appointments                |
-| 🩺 Doctor Tools             | Manage appointments and status updates             |
-| 🔍 Search                   | By doctor name, patient name, or date              |
-| 📧 Notifications            | SMTP-based email notifications                     |
-| ☁️ Cloud Integration        | AWS DynamoDB and optional SNS                      |
-| 🎨 UI                       | Bootstrap 5 with dark mode & accessibility         |
-| 🧪 Testing                  | Fully functional test coverage for major flows     |
-| 💻 Deployment               | Suitable for AWS EC2, Heroku, or any VPS host      |
-
----
-
-## 📁 Project Structure
-
-## 📁 Project Structure — MedTrack
-
-```bash
+🚀 Full Feature Summary
+Feature	Description
+👥 Roles	Patient, Doctor, (Admin - future scope)
+🔐 Auth	Secure login with hashed passwords
+📅 Booking	Patients book and view appointments
+🩺 Doctor Tools	Manage appointments and status updates
+🔍 Search	By doctor name, patient name, or date
+📧 Notifications	SMTP-based email notifications
+☁️ Cloud Integration	AWS DynamoDB and optional SNS
+🎨 UI	Bootstrap 5 with dark mode & accessibility
+🧪 Testing	Fully functional test coverage for major flows
+💻 Deployment	Suitable for AWS EC2, Heroku, or any VPS host
+📁 Project Structure
+📁 Project Structure — MedTrack
 MedTrack/
 ├── app.py                       # Main Flask app logic
 ├── requirements.txt             # Python packages
@@ -186,4 +169,3 @@ flask run
 
 **Developed by:** [@SAGAR](https://github.com/yourusername)  
 📧 **Contact:** `Sagar@example.com`
-
