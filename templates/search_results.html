@@ -1,4 +1,5 @@
-<!-- templates/search_results.html -->
+<!--search_results.html-->
+<!-- This is the search results page for displaying appointment search results -->
 {% extends "base.html" %}
 
 {% block content %}
@@ -6,34 +7,49 @@
     <div class="card shadow-sm">
         <div class="card-body">
             <h3 class="text-center mb-3 fw-bold">Search Results</h3>
-            <p class="text-center">Showing results for: <strong>"{{ search_query }}"</strong></p>
+            <p class="text-center">Showing results for: <strong>"{{ search_term }}"</strong></p>
 
             <div class="table-responsive">
                 <table class="table table-bordered align-middle mt-4">
                     <thead class="table-light">
                         <tr>
                             <th scope="col">ID</th>
-                            <th scope="col">Patient</th>
+                            {% if session['role'] == 'doctor' %}
+                                <th scope="col">Patient</th>
+                            {% else %}
+                                <th scope="col">Doctor</th>
+                            {% endif %}
                             <th scope="col">Date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for appointment in results %}
+                        {% for appointment in appointments %}
                         <tr>
                             <td>{{ appointment.appointment_id[:8] }}...</td>
-                            <td>{{ appointment.patient_name }}</td>
+                            <td>
+                                {% if session['role'] == 'doctor' %}
+                                    {{ appointment.patient_name }}
+                                {% else %}
+                                    {{ appointment.doctor_name }}
+                                {% endif %}
+                            </td>
                             <td>{{ appointment.appointment_date[:10] }}</td>
                             <td>
                                 {% if appointment.status == 'pending' %}
-                                    <span class="text-warning fw-semibold">{{ appointment.status|capitalize }}</span>
+                                    <span class="text-warning fw-semibold">Pending</span>
                                 {% elif appointment.status == 'completed' %}
-                                    <span class="text-success fw-semibold">{{ appointment.status|capitalize }}</span>
+                                    <span class="text-success fw-semibold">Completed</span>
+                                {% else %}
+                                    <span class="text-muted">Unknown</span>
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ url_for('view_appointment_doctor', appointment_id=appointment.appointment_id) }}" class="btn btn-primary btn-sm">View</a>
+                                <a href="{{ url_for(
+                                    'view_appointment_' + session['role'],
+                                    appointment_id=appointment.appointment_id
+                                ) }}" class="btn btn-primary btn-sm">View</a>
                             </td>
                         </tr>
                         {% else %}
@@ -46,7 +62,7 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="{{ url_for('dashboard_doctor') }}" class="btn btn-primary">Back to Dashboard</a>
+                <a href="{{ url_for('dashboard_' + session['role']) }}" class="btn btn-primary">Back to Dashboard</a>
             </div>
         </div>
     </div>

@@ -2,59 +2,138 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container my-5">
+<style>
+    body {
+        background: linear-gradient(135deg, #001f4d, #004080); /* Navy gradient */
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    footer {
+        display: none !important; /* Hides footer */
+    }
+
+    .glass-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(15px);
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    }
+
+    .role-toggle .btn {
+        transition: all 0.3s ease;
+        border: 1px solid #001f4d;
+        color: #001f4d;
+    }
+
+    .role-toggle .btn.active {
+        background-color: #ffd700; /* Yellow */
+        color: #001f4d;
+        border-color: #ffd700;
+    }
+
+    .form-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ffd700; /* Yellow */
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+    .form-control {
+        padding-left: 40px;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #ffd700; /* Yellow focus */
+    }
+
+    .btn-light {
+        background-color: #ffd700;
+        color: #001f4d;
+        border: none;
+    }
+
+    .btn-light:hover {
+        background-color: #e6c200;
+    }
+
+    .text-light,
+    .text-white {
+        color: #fff !important;
+    }
+
+    .text-warning {
+        color: #ffd700 !important;
+    }
+
+    a.text-light:hover {
+        color: #ffd700 !important;
+    }
+
+</style>
+
+<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-5">
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h2 class="fw-bold mb-3">Login to Your Account</h2>
-                    <p class="text-muted mb-4">Access your healthcare dashboard to manage appointments.</p>
+            <div class="card glass-card p-4">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-white">Welcome Back</h2>
+                    <p class="text-light">Login to manage your healthcare dashboard</p>
+                </div>
 
-                    <!-- Role Selection -->
-                    <div class="d-flex mb-3">
-                        <button type="button" class="btn btn-primary w-50 me-2 role-btn active" data-role="patient">Patient</button>
-                        <button type="button" class="btn btn-light w-50 role-btn" data-role="doctor">Doctor</button>
+                <!-- Role Toggle -->
+                <div class="role-toggle d-flex mb-4">
+                    <button type="button" class="btn w-50 me-2 role-btn active" data-role="patient">Patient</button>
+                    <button type="button" class="btn w-50 role-btn" data-role="doctor">Doctor</button>
+                </div>
+
+                <form method="POST" action="{{ url_for('login') }}">
+                    <input type="hidden" name="role" id="role" value="patient">
+
+                    <div class="form-group mb-3">
+                        <i class="fa fa-envelope form-icon"></i>
+                        <input type="email" class="form-control" name="email" placeholder="Email address" required>
                     </div>
 
-                    <form method="POST" action="{{ url_for('login') }}">
-                        <input type="hidden" name="role" id="role" value="patient">
-
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-
-                        <div class="mb-3 text-end">
-                            <a href="#" class="small">Forgot password?</a>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary w-100">Login</button>
-                    </form>
-
-                    <div class="text-center mt-3">
-                        <small class="text-muted">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></small>
+                    <div class="form-group mb-3">
+                        <i class="fa fa-lock form-icon"></i>
+                        <input type="password" class="form-control" name="password" placeholder="Password" required>
                     </div>
+
+                    <div class="text-end mb-3">
+                        <a href="#" class="text-light small">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-light w-100">Login</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <small class="text-white">Don't have an account? 
+                        <a href="{{ url_for('register') }}" class="text-warning">Register here</a>
+                    </small>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- FontAwesome (if not already loaded) -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 <script>
-// Role button toggle script
+// Role selection toggle
 document.querySelectorAll('.role-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
-        document.querySelectorAll('.role-btn').forEach(b => {
-            b.classList.remove('active');
-            b.classList.replace('btn-primary', 'btn-light');
-        });
+    btn.addEventListener('click', function () {
+        document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-        this.classList.replace('btn-light', 'btn-primary');
         document.getElementById('role').value = this.dataset.role;
     });
 });

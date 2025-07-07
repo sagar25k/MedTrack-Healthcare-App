@@ -25,46 +25,64 @@
 
 <body class="d-flex flex-column min-vh-100">
 
-    <!-- Skip to Main Content Link (Accessibility) -->
-    <a href="#maincontent" class="visually-hidden-focusable skip-to-content">Skip to main content</a>
+    <!-- ✅ Skip to Main Content Link (Accessibility) -->
+    <a href="#maincontent" class="visually-hidden-focusable position-absolute top-0 start-0 p-2 bg-primary text-white">Skip to main content</a>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-        <div class="container">
-            <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
-                <span class="text-lemon-green">Health<span class="text-lemon-dark">Care</span></span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+   <!-- Navbar -->
+<nav class="navbar navbar-expand-lg shadow-sm" style="background-color: #1e3a8a;">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ url_for('index') }}">
+            <span style="color: #facc15;">Health<span style="color: #ffffff;">Care</span></span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    {% if 'email' in session %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" href="{{ url_for('dashboard') }}">Dashboard</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.endpoint == 'profile' %}active{% endif %}" href="{{ url_for('profile') }}">Profile</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                        </li>
-                    {% else %}
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" href="{{ url_for('login') }}">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if request.endpoint == 'register' %}active{% endif %}" href="{{ url_for('register') }}">Register</a>
-                        </li>
-                    {% endif %}
-                </ul>
-                <button id="toggleDarkMode" class="btn btn-outline-lemon-green ms-3" aria-label="Toggle dark mode">Dark Mode</button>
-            </div>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                {% if 'email' in session %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'dashboard' %}active{% endif %}" 
+                           href="{{ url_for('dashboard') }}"
+                           style="color: #ffffff; transition: color 0.3s ease, background-color 0.3s ease; padding: 8px 16px; border-radius: 5px;"
+                           onmouseover="this.style.color='#facc15'; this.style.backgroundColor='rgba(250, 204, 21, 0.1)';"
+                           onmouseout="this.style.color='#ffffff'; this.style.backgroundColor='transparent';">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'profile' %}active{% endif %}" 
+                           href="{{ url_for('profile') }}"
+                           style="color: #ffffff; transition: color 0.3s ease, background-color 0.3s ease; padding: 8px 16px; border-radius: 5px;"
+                           onmouseover="this.style.color='#facc15'; this.style.backgroundColor='rgba(250, 204, 21, 0.1)';"
+                           onmouseout="this.style.color='#ffffff'; this.style.backgroundColor='transparent';">Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" 
+                           href="{{ url_for('logout') }}"
+                           style="color: #ffffff; transition: color 0.3s ease, background-color 0.3s ease; padding: 8px 16px; border-radius: 5px;"
+                           onmouseover="this.style.color='#facc15'; this.style.backgroundColor='rgba(250, 204, 21, 0.1)';"
+                           onmouseout="this.style.color='#ffffff'; this.style.backgroundColor='transparent';">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'login' %}active{% endif %}" 
+                           href="{{ url_for('login') }}"
+                           style="color: #ffffff; transition: color 0.3s ease, background-color 0.3s ease; padding: 8px 16px; border-radius: 5px;"
+                           onmouseover="this.style.color='#facc15'; this.style.backgroundColor='rgba(250, 204, 21, 0.1)';"
+                           onmouseout="this.style.color='#ffffff'; this.style.backgroundColor='transparent';">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.endpoint == 'register' %}active{% endif %}" 
+                           href="{{ url_for('register') }}"
+                           style="color: #ffffff; transition: color 0.3s ease, background-color 0.3s ease; padding: 8px 16px; border-radius: 5px;"
+                           onmouseover="this.style.color='#facc15'; this.style.backgroundColor='rgba(250, 204, 21, 0.1)';"
+                           onmouseout="this.style.color='#ffffff'; this.style.backgroundColor='transparent';">Register</a>
+                    </li>
+                {% endif %}
+            </ul>
         </div>
-    </nav>
-
+    </div>
+</nav>
     <!-- Flash Messages -->
     <div class="container my-3">
         {% with messages = get_flashed_messages(with_categories=true) %}
@@ -79,23 +97,29 @@
         {% endwith %}
     </div>
 
-    <!-- Main Content Area -->
+    <!-- ✅ Main Content Area -->
     <main id="maincontent" class="container flex-grow-1 my-4" role="main">
         {% block content %}{% endblock %}
     </main>
 
     <!-- Footer -->
-    <footer class="text-center py-3 mt-auto">
-        <p class="mb-0">© 2025 <span class="fw-bold">HealthCare App</span>. All rights reserved.</p>
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <p class="mb-0">&copy; 2025 <span class="fw-bold">HealthCare App</span>. All rights reserved.</p>
     </footer>
 
     <!-- Bootstrap Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- AOS JS (Animations on Scroll) -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-
     <!-- Custom JS -->
     <script src="{{ url_for('static', filename='js/custom.js') }}"></script>
+
+    <!-- AOS JS (Animations on Scroll) -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
 </body>
 </html>

@@ -3,6 +3,14 @@
 
 {% block content %}
 <div class="container my-5">
+    <!-- Display flash messages for user feedback -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
 
     <div class="card shadow-sm mx-auto" style="max-width: 800px;">
         <div class="card-body p-4">
@@ -10,24 +18,31 @@
             <p class="text-muted mb-4">Select a doctor and provide your symptoms to book a consultation.</p>
 
             <form method="POST" action="{{ url_for('book_appointment') }}">
+                <!-- CSRF protection (requires Flask-WTF) -->
+                {{ form.hidden_tag() if form else '' }}
+
                 <div class="mb-4">
                     <h5 class="fw-semibold mb-2">Select Doctor</h5>
-                    <div class="row g-3">
-                        {% for doctor in doctors %}
-                        <div class="col-md-6">
-                            <label class="border rounded p-3 d-block text-center h-100 cursor-pointer">
-                                <input type="radio" class="btn-check" name="doctor_email" value="{{ doctor.email }}" required>
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center mb-2" style="width: 60px; height: 60px; font-size: 1.5rem;">
-                                        {{ doctor.name[0]|upper }}
+                    {% if not doctors %}
+                        <p class="text-muted">No doctors available at the moment.</p>
+                    {% else %}
+                        <div class="row g-3" id="doctorSelection">
+                            {% for doctor in doctors %}
+                            <div class="col-md-6">
+                                <label class="border rounded p-3 d-block text-center h-100 doctor-card cursor-pointer {% if loop.first %}active{% endif %}" data-value="{{ doctor.email }}">
+                                    <input type="radio" class="btn-check" name="doctor_email" value="{{ doctor.email }}" required {% if loop.first %}checked{% endif %}>
+                                    <div class="d-flex flex-column align-items-center">
+                                        <div class="bg-primary text-white rounded-circle d-flex justify-content-center align-items-center mb-2" style="width: 60px; height: 60px; font-size: 1.5rem;">
+                                            {{ doctor.name[0]|upper }}
+                                        </div>
+                                        <h6 class="fw-bold mb-0">{{ doctor.name }}</h6>
+                                        <small class="text-muted">{{ doctor.specialization if doctor.specialization else 'Not specified' }}</small>
                                     </div>
-                                    <h6 class="fw-bold mb-0">{{ doctor.name }}</h6>
-                                    <small class="text-muted">{{ doctor.specialization }}</small>
-                                </div>
-                            </label>
+                                </label>
+                            </div>
+                            {% endfor %}
                         </div>
-                        {% endfor %}
-                    </div>
+                    {% endif %}
                 </div>
 
                 <div class="row g-3 mb-3">
@@ -48,9 +63,52 @@
 
                 <button type="submit" class="btn btn-primary">Book Appointment</button>
             </form>
-
         </div>
     </div>
-
 </div>
+
+<style>
+    .doctor-card {
+        transition: all 0.3s ease;
+        border-color: #dee2e6;
+    }
+    .doctor-card.active {
+        border-color: #ffc107;
+        background-color: rgba(255, 193, 7, 0.1);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .doctor-card input[type="radio"]:checked + .d-flex {
+        color: #ffc107;
+    }
+    .cursor-pointer {
+        cursor: pointer;
+    }
+    .alert {
+        margin-bottom: 1rem;
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const doctorCards = document.querySelectorAll('.doctor-card');
+    doctorCards.forEach(card => {
+        card.addEventListener('click', function () {
+            // Remove active class from all cards
+            doctorCards.forEach(c => c.classList.remove('active'));
+            // Add active class to the clicked card
+            this.classList.add('active');
+            // Ensure the corresponding radio button is checked
+            const radio = this.querySelector('input[type="radio"]');
+            radio.checked = true;
+        });
+    });
+
+    // Set the first doctor as selected by default
+    const firstCard = document.querySelector('.doctor-card');
+    if (firstCard) {
+        firstCard.classList.add('active');
+        firstCard.querySelector('input[type="radio"]').checked = true;
+    }
+});
+</script>
 {% endblock %}

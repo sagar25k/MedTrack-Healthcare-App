@@ -1,91 +1,187 @@
-<!-- templates/register.html -->
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-6">
-            <div class="card shadow-sm">
-                <div class="card-body p-4">
-                    <h2 class="fw-bold mb-3">Create Your Account</h2>
-                    <p class="text-muted">Join our healthcare platform to connect with doctors and manage your health.</p>
+<style>
+    body {
+        background: url('{{ url_for("static", filename="images/register-bg.jpg") }}') no-repeat center center fixed;
+        background-size: cover;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-                    <!-- Role Selection -->
-                    <div class="d-flex mb-3">
-                        <button type="button" class="btn btn-outline-secondary w-50 me-2 role-btn active" data-role="patient">Patient</button>
-                        <button type="button" class="btn btn-outline-secondary w-50 role-btn" data-role="doctor">Doctor</button>
+    .form-wrapper {
+        min-height: calc(100vh - 80px); /* adjust based on navbar height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 15px;
+    }
+
+    .glass-card {
+        background: rgba(11, 29, 58, 0.85); /* Navy blue glass background */
+        backdrop-filter: blur(20px);
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        color: #fff;
+        padding: 2rem;
+        width: 100%;
+        max-width: 1100px; /* wider form */
+        margin: 0 auto;
+    }
+
+    .role-toggle .btn {
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        background-color: transparent;
+    }
+
+    .role-toggle .btn.active {
+        background-color: #ffc107;
+        color: #0b1d3a;
+        font-weight: bold;
+    }
+
+    .form-group {
+        position: relative;
+    }
+
+    .form-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #ffc107;
+    }
+
+    .form-control {
+        padding-left: 40px;
+        border-radius: 10px;
+        border: 1px solid #ccc;
+    }
+
+    .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: none;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #ffc107;
+    }
+
+    .btn-primary {
+        background-color: #ffc107;
+        color: #0b1d3a;
+        border: none;
+        font-weight: bold;
+    }
+
+    .btn-primary:hover {
+        background-color: #e6b800;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    a.text-warning:hover {
+        color: #ffc107 !important;
+    }
+
+    select.form-select:focus {
+        border-color: #ffc107;
+        box-shadow: none;
+    }
+</style>
+
+<div class="container form-wrapper">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="card glass-card">
+                <div class="text-center mb-4">
+                    <h2 class="fw-bold text-warning">Create Your Account</h2>
+                    <p class="text-light">Join our platform to connect with doctors and manage your health.</p>
+                </div>
+
+                <!-- Role Toggle -->
+                <div class="role-toggle d-flex mb-4">
+                    <button type="button" class="btn w-50 me-2 role-btn active" data-role="patient">Patient</button>
+                    <button type="button" class="btn w-50 role-btn" data-role="doctor">Doctor</button>
+                </div>
+
+                <form method="POST" action="{{ url_for('register') }}">
+                    <input type="hidden" name="role" id="role" value="patient">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 form-group mb-3">
+                            <i class="fa fa-user form-icon"></i>
+                            <input type="text" class="form-control" name="name" placeholder="Full Name" required>
+                        </div>
+                        <div class="col-md-6 form-group mb-3">
+                            <i class="fa fa-envelope form-icon"></i>
+                            <input type="email" class="form-control" name="email" placeholder="Email Address" required>
+                        </div>
                     </div>
 
-                    <form method="POST" action="{{ url_for('register') }}">
-                        <input type="hidden" name="role" id="role" value="patient">
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="name" class="form-label">Full Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div class="col">
-                                <label for="email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                            </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 form-group mb-3">
+                            <i class="fa fa-lock form-icon"></i>
+                            <input type="password" class="form-control" name="password" placeholder="Password" required>
                         </div>
-
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="password" name="password" required>
-                            </div>
-                            <div class="col">
-                                <label for="confirm_password" class="form-label">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
-                            </div>
+                        <div class="col-md-6 form-group mb-3">
+                            <i class="fa fa-lock form-icon"></i>
+                            <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password" required>
                         </div>
+                    </div>
 
-                        <div class="row mb-3">
-                            <div class="col">
-                                <label for="age" class="form-label">Age</label>
-                                <input type="number" class="form-control" id="age" name="age" required>
-                            </div>
-                            <div class="col">
-                                <label for="gender" class="form-label">Gender</label>
-                                <select class="form-select" id="gender" name="gender" required>
-                                    <option value="" selected disabled>Select Gender</option>
-                                    <option value="Male">Male</option>
-                                    <option value="Female">Female</option>
-                                    <option value="Other">Other</option>
-                                </select>
-                            </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6 form-group mb-3">
+                            <i class="fa fa-hashtag form-icon"></i>
+                            <input type="number" class="form-control" name="age" placeholder="Age" required>
                         </div>
-
-                        <div class="mb-3 specialization-field d-none">
-                            <label for="specialization" class="form-label">Specialization</label>
-                            <select class="form-select" id="specialization" name="specialization">
-                                <option value="" selected disabled>Select Specialization</option>
-                                <option value="Cardiology">Cardiology</option>
-                                <option value="Dermatology">Dermatology</option>
-                                <option value="Neurology">Neurology</option>
-                                <option value="Pediatrics">Pediatrics</option>
-                                <option value="Psychiatry">Psychiatry</option>
+                        <div class="col-md-6 mb-3">
+                            <select class="form-select" name="gender" required>
+                                <option value="" selected disabled>Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
                                 <option value="Other">Other</option>
                             </select>
                         </div>
-
-                        <button type="submit" class="btn btn-primary w-100">Register</button>
-                    </form>
-
-                    <div class="text-center mt-3">
-                        <small class="text-muted">Already have an account? <a href="{{ url_for('login') }}">Login here</a></small>
                     </div>
+
+                    <!-- Specialization (Doctor Only) -->
+                    <div class="mb-3 specialization-field d-none">
+                        <label class="form-label">Specialization</label>
+                        <select class="form-select" name="specialization">
+                            <option value="" selected disabled>Select Specialization</option>
+                            <option value="Cardiology">Cardiology</option>
+                            <option value="Dermatology">Dermatology</option>
+                            <option value="Neurology">Neurology</option>
+                            <option value="Pediatrics">Pediatrics</option>
+                            <option value="Psychiatry">Psychiatry</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                </form>
+
+                <div class="text-center mt-4">
+                    <small class="text-light">Already have an account?
+                        <a href="{{ url_for('login') }}" class="text-warning">Login here</a>
+                    </small>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- FontAwesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
 <script>
-// Role button toggle script
 document.querySelectorAll('.role-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
         document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
         this.classList.add('active');
         document.getElementById('role').value = this.dataset.role;
