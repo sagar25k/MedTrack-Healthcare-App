@@ -43,10 +43,12 @@
 
 > Go through the hosted Application  
 > IP: `http://23.20.160.238:5000`
+```
 ---
-## 📷 Demo Video (Follow Link)
+```bash
+## 📷 Demo Video *(Follow Link)*
 > Drive Link: ``
-
+```
 ---
 
 ## 🚀 Full Feature Summary
