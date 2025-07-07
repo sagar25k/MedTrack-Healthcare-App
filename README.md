@@ -38,10 +38,13 @@
 
 ---
 
-## 🌐 Live Demo *(Optional)*
+## 🌐 Live Demo 
 
-> Add your hosted demo link here  
-> Example: `https://medtrack.yourdomain.com`
+> Go through the hosted Application  
+> IP: `http://23.20.160.238:5000`
+
+## 📷 Demo Video (Follow Link)
+> Drive Link: ``
 
 ---
 
