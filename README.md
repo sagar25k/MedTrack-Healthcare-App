@@ -38,11 +38,12 @@
 
 ---
 
+```bash
 ## 🌐 Live Demo 
 
 > Go through the hosted Application  
 > IP: `http://23.20.160.238:5000`
-
+---
 ## 📷 Demo Video (Follow Link)
 > Drive Link: ``
 
